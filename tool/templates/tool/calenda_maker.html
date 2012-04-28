@@ -1,0 +1,42 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Calenda Maker</title>
+</head>
+<body>
+{% if download_link %}
+<div>日历生成完毕, <a href='{{download_link}}'>点击下载</a></div>	
+{% endif %}
+<div>
+	<form action="" method="POST">
+	<table>
+		<tr>
+			<td>任务列表</td>
+			<td><textarea name="tasks" id="tasks" cols="30" rows="10"></textarea></td>
+		</tr>
+		<tr>
+			<td>起始日期</td>
+			<td><input type="text" name="date_from" id="date_from"></td>
+		</tr>
+		<tr>
+			<td>任务周期(天)</td>
+			<td><input type="text" name="days" id="days"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><input type="submit" value="确定"/></td>
+		</tr>
+	</table>
+	</form>
+</div>
+<div>
+	{{params|safe}}
+</div>
+<div>
+	{{params1|safe}}
+</div>
+<div>
+	{{params2|safe}}
+</div>
+</body>
+</html>
