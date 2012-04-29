@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect
 #import blog.urls
 
 urlpatterns = patterns('',
-    #(r'^$', 'myblog.views.hello'),
+    (r'^$', 'tool.views.index'),
     # (r'^$',lambda x:HttpResponseRedirect('/blog/')),
     # (r'^admin/', include(admin.site.urls)),
     (r'^tool/', include('tool.urls')),
