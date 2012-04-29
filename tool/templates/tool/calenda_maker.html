@@ -2,25 +2,93 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>Calenda Maker</title>
+	<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.19/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.19/themes/ui-lightness/jquery-ui.css">
+
+	<script type="text/javascript">
+	    $(document).ready(function() {
+	    	$("#date_from").datepicker({ dateFormat: "yy-mm-dd" });
+	    	$("#date_to").datepicker({ dateFormat: "yy-mm-dd" });
+
+	    	$("#form1").submit(function() {
+	    		if ($("#tasks").val() == '') {
+	    			alert("请输入任务列表");
+	    			$("#tasks").focus();
+	    			return false;
+	    		}
+	    		if ($("#date_from").val() == '') {
+	    			alert("请选择起始日期");
+	    			$("#date_from").focus();
+	    			return false;
+	    		}
+	    		if ($('input[name=ttype]:checked').length == 0) {
+	    			alert("请选择结束日期或任务周期");
+	    			return false;
+	    		}
+	    		if ($('#ttype1').attr('checked')) {
+	    			if ($("#date_to").val() == '') {
+		    			alert("请设置结束日期");
+		    			$("#date_to").focus();
+		    			return false;
+		    		}
+	    		}
+	    		if ($('#ttype2').attr('checked')) {
+	    			if ($("#days").val() == '') {
+		    			alert("请设置任务周期");
+		    			$('#days').focus().select();
+		    			return false;
+		    		}
+	    		}
+	    	})
+
+	    	$("#ttype1").click( function() {
+	    		$('#tr_date_to').show();
+	    		$("#date_to").focus();
+	    		$('#tr_period').hide();
+	    	});
+
+	    	$("#ttype2").click( function() {
+	    		$('#tr_date_to').hide();
+	    		$('#tr_period').show();
+	    		$('#days').focus().select();
+	    	});
+	    });
+	</script>
+
+	<style type="text/css">
+	* {font-size:12px;}
+	</style>
 </head>
 <body>
 {% if download_link %}
 <div>日历生成完毕, <a href='{{download_link}}'>点击下载</a></div>	
 {% endif %}
 <div>
-	<form action="" method="POST">
+	<form id="form1" action="" method="POST">
 	<table>
 		<tr>
-			<td>任务列表</td>
+			<td valign="top">任务列表</td>
 			<td><textarea name="tasks" id="tasks" cols="30" rows="10"></textarea></td>
 		</tr>
 		<tr>
 			<td>起始日期</td>
-			<td><input type="text" name="date_from" id="date_from"></td>
+			<td><input type="text" name="date_from" id="date_from"/></td>
 		</tr>
 		<tr>
-			<td>任务周期(天)</td>
-			<td><input type="text" name="days" id="days"></td>
+			<td></td>
+			<td>
+				<input type="radio" name="ttype" id="ttype1" value="1"> 结束日期
+				<input type="radio" name="ttype" id="ttype2" value="2"> 任务周期
+			</td>
+		</tr>
+		<tr id="tr_date_to" style="display:none;">
+			<td>结束日期</td>
+			<td><input type="text" name="date_to" id="date_to"/></td>
+		</tr>
+		<tr id="tr_period" style="display:none;">
+			<td>任务周期</td>
+			<td><input type="text" name="days" id="days" value="30"/>天</td>
 		</tr>
 		<tr>
 			<td></td>

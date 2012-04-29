@@ -1,0 +1,13 @@
+syntax: glob
+
+*.pyc
+*.db
+*.db3
+*.zip
+*.rar
+file
+*.xls
+*.xlsx
+.ropeproject
+*sublime*
+*.log
