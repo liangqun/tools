@@ -1,12 +1,14 @@
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>免费工具</title>
+{% extends "tool/base.html" %}
+
+{% block title %}免费工具{% endblock title %}
+
+{% block css_js %}
 	<style type="text/css">
 	td {padding:5px;line-height:26px;}
 	</style>
-</head>
-<body>
+{% endblock css_js %}
+
+{% block middle %}
 <table>
 	<tr>
 		<td valign="top"><a href='/tool/calenda_maker/'>日历生成器</a></td>
@@ -18,5 +20,4 @@
 		</td>
 	</tr>
 </table>
-</body>
-</html>
+{% endblock middle %}
