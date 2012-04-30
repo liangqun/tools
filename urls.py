@@ -6,10 +6,12 @@ from django.http import HttpResponseRedirect
 # admin.autodiscover()
 
 #import blog.urls
+import settings
 
 urlpatterns = patterns('',
     (r'^$', 'tool.views.index'),
     # (r'^$',lambda x:HttpResponseRedirect('/blog/')),
     # (r'^admin/', include(admin.site.urls)),
     (r'^tool/', include('tool.urls')),
+    (r'^static/(?P<path>.*)$','django.views.static.serve',{'document_root': settings.MEDIA_ROOT}),
 )

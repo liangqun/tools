@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.19/themes/ui-lightness/jquery-ui.css">
 
 	<script type="text/javascript">
+		var firsttime = true;
 	    $(document).ready(function() {
 	    	$("#date_from").datepicker({ dateFormat: "yy-mm-dd" });
 	    	$("#date_to").datepicker({ dateFormat: "yy-mm-dd" });
@@ -42,6 +43,13 @@
 	    		}
 	    	})
 
+	    	$("#tasks").focus( function() {
+	    		if (firsttime) {
+	    			$("#tasks").val('').css('color','black');
+	    			firsttime = false;
+	    		}	    		
+	    	});
+
 	    	$("#ttype1").click( function() {
 	    		$('#tr_date_to').show();
 	    		$("#date_to").focus();
@@ -64,12 +72,19 @@
 {% if download_link %}
 <div>日历生成完毕, <a href='{{download_link}}'>点击下载</a></div>	
 {% endif %}
-<div>
+<div style="float:left;">
 	<form id="form1" action="" method="POST">
 	<table>
 		<tr>
 			<td valign="top">任务列表</td>
-			<td><textarea name="tasks" id="tasks" cols="30" rows="10"></textarea></td>
+			<td><textarea name="tasks" id="tasks" cols="30" rows="10" style="color:gray;">需求分析
+概要设计
+详细设计
+编码
+内部测试
+外部测试
+部署
+上线</textarea></td>
 		</tr>
 		<tr>
 			<td>起始日期</td>
@@ -97,14 +112,12 @@
 	</table>
 	</form>
 </div>
-<div>
-	{{params|safe}}
-</div>
-<div>
-	{{params1|safe}}
-</div>
-<div>
-	{{params2|safe}}
+<div style="float:left;margin-left:20px;">
+	使用说明:<br/>
+	<div>
+		输入"任务列表","起始时间","结束时间"或"任务周期", 自动生成如图所示的EXCEL表格.<br/>
+		<img src="/static/images/schedule.png" alt="schedule.png"/>
+	</div>
 </div>
 </body>
 </html>

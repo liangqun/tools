@@ -6,8 +6,9 @@ if __name__ == '__main__':
 
 #from openpyxl.reader.excel import load_workbook
 from openpyxl.workbook import Workbook
-#from openpyxl.style import Color, Fill
+from openpyxl.style import Color
 from openpyxl.style import Fill
+from openpyxl.style import NumberFormat, Border, Color, Font
 #from openpyxl.cell import Cell,get_column_letter
 from openpyxl.cell import get_column_letter
 
@@ -37,7 +38,7 @@ def make_calenda(task_list, date_from, days, save_as):
             cell.value = u'%s月' % d.month
             month_set.add(month)
         cell = ws.cell(row = row+1, column = i+from_column)
-        cell.value = '%s' % d.day
+        cell.value = '%s' % d.day        
         if d.weekday() in (5,6):
             weekday_column_list.append(i+from_column)
 
@@ -51,32 +52,39 @@ def make_calenda(task_list, date_from, days, save_as):
             cell = ws.cell(row=row,column=column)
             cell.style.fill.fill_type = Fill.FILL_SOLID
             cell.style.fill.start_color.index = 'CBCACA'
+            
 
     for i,task in enumerate(task_list):
         cell = ws.cell(row=i+2,column=0)
         cell.value = task
 
+    #设置单元格border
+    for row in range(0,len(task_list)+2):
+        for col in range(0, days+2):
+            cell = ws.cell(row=row,column=col)
+            cell.style.borders.top.border_style = Border.BORDER_THIN
+            cell.style.borders.right.border_style = Border.BORDER_THIN
+            cell.style.borders.bottom.border_style = Border.BORDER_THIN
+            cell.style.borders.left.border_style = Border.BORDER_THIN
+
+    #设置第一列宽
+    ws.column_dimensions['A'].width = 30
+
     wb.save(save_as)
 
 if __name__ == '__main__':
     task_list1 = [
-        u'登录',
-        u'注册',
-        u'首页',
-        u'答题后续页面',
-        u'趣味测试页',
-        u'朋友',
-        u'兑换',
-        u'我的关注-我的主页',
-        u'我的关注-最新调查',
-        u'我的关注-最新投票',
-        u'我的关注-我的发布',
-        u'我的关注-我的积分',
-        u'我的关注-我的参与',
-        u'我的关注-我的好友',
+        u'需求分析',
+        u'概要设计',
+        u'详细设计',
+        u'编码',
+        u'内部测试',
+        u'外部测试',
+        u'部署',
+        u'上线',
     ]
 
-    task_days = 40
+    task_days = 30
     date_from1 = datetime.datetime.now()
     save_as1 = 'calenda.xlsx'
     make_calenda(task_list1, date_from1, task_days, save_as1)
